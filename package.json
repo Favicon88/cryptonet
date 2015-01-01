@@ -1,0 +1,41 @@
+{
+  "name": "cryptonet",
+  "version": "0.9.0",
+  "description": "An encrypted chatting application with server and client out of the box!",
+  "main": "index.js",
+  "dependencies": {
+    "colors": "^1.0.3"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "start": "node index",
+    "client": "node index client",
+    "server": "node index server"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/96AA48/cryptonet.git"
+  },
+  "bin" : {
+    "cryptonet" : "index.js",
+    "crynet" : "index.js"
+  },
+  "preferGlobal": true,
+  "keywords": [
+    "crypto",
+    "chat",
+    "chatting",
+    "terminal",
+    "encrypted",
+    "cli",
+    "secure",
+    "tool",
+    "application"
+  ],
+  "author": "Bram van der Veen",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/96AA48/cryptonet/issues"
+  },
+  "homepage": "https://github.com/96AA48/cryptonet"
+}
