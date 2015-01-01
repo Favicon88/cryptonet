@@ -1,10 +1,11 @@
 //commands.js
 var settings = JSON.parse(require("fs").readFileSync(__dirname + "/config.json"));
-var crypt = require('./crypt');
-var fs = require('fs');
+var crypt = require("./crypt");
+var fs = require("fs");
 
 module.exports = {
 	"check" : check,
+	"username" : username,
 	"password" : password,
 	"color" : color,
 	"clear" : clear,
@@ -25,13 +26,21 @@ function check(data, client) {
 	}
 }
 
+function username(cmd) {
+	if (cmd.length > 1) {
+		settings.username = cmd.splice(1).join(" ");
+		process.stdout.write("Selected username : " + settings.username + "\n\n")
+	}
+	else process.stdout.write("Commands needs the following parameter : username\n\n");
+}
+
 function password(cmd) {
 	if (cmd.length > 1){
 		settings.password = cmd.splice(1).join(" ");
-		process.stdout.write("Selected password : " + settings.password + '\n\n');
+		process.stdout.write("Selected password : " + settings.password + "\n\n");
 		write();
 	}
-	else process.stdout.write("Commands needs following parameter : password\n\n");
+	else process.stdout.write("Commands needs the following parameter : password\n\n");
 	return;
 }
 
@@ -51,7 +60,7 @@ function color(cmd) {
 		})(i);
 	}
 
-	process.stdout.write("Selected : " + cmd.join(", ") + '\n\n');
+	process.stdout.write("Selected : " + cmd.join(", ") + "\n\n");
 	settings.color = cmd;
 	write();
 }
@@ -78,6 +87,6 @@ function exit(cmd, client) {
 
 function write() {
 	module.exports.settings = settings;
-	fs.writeFileSync('config.json', JSON.stringify(settings));
+	fs.writeFileSync("config.json", JSON.stringify(settings));
 	return;
 }
