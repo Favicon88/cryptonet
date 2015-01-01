@@ -104,8 +104,9 @@ var commands = {
 
 	},
 	password : function (arg) {
-		passwd = arg[1];
-		console.log('Password is set to : ' + arg[1]);
+		if (arg[1]) passwd = arg[1];
+		else passwd = "default";
+		console.log('Password is set to : ' + passwd);
 	},
 	exit : function () {
 		var obj = {
