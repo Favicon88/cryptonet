@@ -1,6 +1,6 @@
 {
 	"username" : "default",
-	"color" : "white",
+	"color" : ["white"],
 	"password" : "default",
 	"crypt" : "aes192"
 }
