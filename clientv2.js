@@ -3,7 +3,7 @@ var crypt = require('./crypt');
 var colors = require('colors');
 var readline = require('readline');
 
-var settings = JSON.parse(require('fs').readFileSync(__dirname + '/config.json'));
+var command = require('./commands');
 var client;
 
 setup();
@@ -19,19 +19,25 @@ function connect(host, port) {
 		process.stdin.resume();
 
 		process.stdin.on('data', function (chunk) {
-			var com = {
-				msg : crypt.encrypt(chunk.toString(), settings),
-				user : settings.username,
-				color : settings.color
-			};
+			if (command.check(chunk.toString(), client)) {
+				var com = {
+					msg : crypt.encrypt(chunk.toString(), command.settings),
+					user : command.settings.username,
+					color : command.settings.color
+				};
 
-			client.write(JSON.stringify(com));
+				client.write(JSON.stringify(com));
+			}
 		})
 	});
 
 	client.on('data', function (data) {
 		data = JSON.parse(data.toString());
-		process.stdout.write((data.user == settings.username ? 'you' : data.user) + " : " + crypt.decrypt(data.msg, settings).toString()[data.color]);
+		var message = (data.user == command.settings.username ? 'you' : data.user) + " : " + crypt.decrypt(data.msg, command.settings).toString();
+		for (i = 0; i < data.color.length; i++) {
+			message = message[data.color[i]];
+		}
+		process.stdout.write('\n' + message + '\n');
 	});
 }
 
@@ -43,5 +49,4 @@ function setup () {
 		var port = ip.split(':')[1] == undefined ? 9648 : parseInt(ip.split(':')[1]);
 		connect(host, port);
 	});
-
 }
